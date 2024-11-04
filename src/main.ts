@@ -55,51 +55,52 @@ window.addEventListener('hashchange', function () {
   }
 });
 
-const canvas:HTMLCanvasElement = document.getElementById("matrixCanvas");
-if (canvas!==null){
+const canvas: HTMLCanvasElement = document.getElementById("matrixCanvas");
+if (canvas !== null) {
 
-  const ctx:CanvasRenderingContext2D = canvas.getContext("2d");
-  if (ctx!=null){
+  const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
+  if (ctx != null) {
 
     // Resize canvas to fit window
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    
+
     const fontSize = 24;
     const columns = Math.floor(canvas.width / fontSize);
-    
+
     // Array to hold the position of each column of characters
     const drops = Array(columns).fill(1000);
     const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
-    
+    ctx.fillStyle = "rgb(0,127,0)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
     function drawMatrixRain() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; 
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.fillStyle = "#00FF00"; 
+
+      ctx.fillStyle = "#00FF00";
       ctx.font = fontSize + "px VT323";
-      
+
       // Loop over each column
       for (let i = 0; i < drops.length; i++) {
         const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
         const x = i * fontSize;
         const y = drops[i] * fontSize;
-        
+
         // Draw the text at the column position
         ctx.fillText(text, x, y);
-        
+
         // Randomly reset drop height to start from top again
         if (y > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
-        
+
         // Increment the drop position for each column
         drops[i]++;
       }
     }
-    
+
     setInterval(drawMatrixRain, 50);
-    
+
     // Adjust canvas size when window is resized
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;

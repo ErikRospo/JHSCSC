@@ -106,7 +106,10 @@ if (canvas !== null) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       drops.length = Math.floor(canvas.width / fontSize);
-      drops.fill(1);
+      drops.fill(1000);
+      ctx.fillStyle = "rgb(0,127,0);"
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     });
   }
 }
